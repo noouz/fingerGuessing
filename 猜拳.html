@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <title>Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="computer">
+            <h2>電 腦</h2>
+            <div class="result-computer">
+                <img src="./hand-1.png" alt="">
+            </div>
+            <ul class="option">
+                <li class="option-0">
+                    <i class="fa-regular fa-hand-peace fa-lg"></i>
+                </li>
+                <li class="option-1">
+                    <i class="fa-regular fa-hand-back-fist fa-lg"></i>
+                </li>
+                <li class="option-2">
+                    <i class="fa-regular fa-hand fa-lg"></i>
+                </li>
+            </ul>
+            <span class="text">電腦預備猜拳中...</span>
+        </div>
+
+
+        <div class="player">
+            <h2>玩 家</h2>
+            <div class="result-player">
+                <img src="./hand-1.png" alt="">
+            </div>
+            <ul class="option">
+                <li class="option-0">
+                    <i class="fa-regular fa-hand-peace fa-lg"></i>
+                </li>
+                <li class="option-1">
+                    <i class="fa-regular fa-hand-back-fist fa-lg"></i>
+                </li>
+                <li class="option-2">
+                    <i class="fa-regular fa-hand fa-lg"></i>
+                </li>
+            </ul>
+            <span class="text">我要出...&#129300;</span>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <button class="start">猜拳</button>
+    </div>
+
+
+    <script>
+        let optionC = document.querySelectorAll('.computer ul.option > li');
+        let optionP = document.querySelectorAll('.player ul.option > li');
+        let startBtn = document.querySelector('.bottom .start');
+
+        let computerResult = document.querySelector('.result-computer > img');
+        let computerText = document.querySelector('.computer > span.text');
+        let computerImg = document.querySelector('.computer .result-computer > img');
+        let playerResult = document.querySelector('.result-player > img');
+        let playerText = document.querySelector('.player > span.text');
+
+        let $ctColor = '#f7f1e9';
+        let $bg2Color = '#d1c7ba';
+
+        let handList = ['剪刀', '石頭', '布'];
+        let isClicked = false;
+        let myChoice = [];
+
+        optionSelect();
+
+        function optionSelect() {
+            optionP.forEach((item, index, arr) => {
+                arr[index].addEventListener('click', () => {
+                    isClicked = true;
+                    arr.forEach(item => item.style.backgroundColor = $ctColor);
+                    optionP[index].style.backgroundColor = $bg2Color;
+                    playerResult.src = `./hand-${index}.png`;
+                    playerText.innerHTML = `我要出${handList[index]} &#128526;`;
+                    myChoice.splice(0, 1, handList[index]);
+                    reset();
+                })
+            })
+        }
+
+        function reset() {
+            computerResult.src = `./hand-1.png`;
+            computerImg.classList.remove('selectedC');
+            optionC.forEach(item => {
+                item.classList.remove('liColorClear');
+                item.style.backgroundColor = $ctColor;
+            });
+            computerText.innerHTML = `電腦預備猜拳中...`;
+        }
+
+        startBtn.addEventListener('click', () => {
+            let random = Math.floor(Math.random() * 3);
+
+            if (!isClicked) {
+                alert('請先選擇你要出什麼!')
+            } else {
+                computerImg.classList.add('selectedC');
+                optionC.forEach(item => {
+                    item.classList.add('liColorClear');
+                    item.style.backgroundColor = $ctColor;
+                    optionC[random].style.backgroundColor = $bg2Color;
+                    computerResult.src = `./hand-${random}.png`;
+                    computerText.innerHTML = `電腦出了${handList[random]}&#129302;`;
+                })
+
+                setTimeout(() => result(), 700);
+                function result() {
+                    startBtn.innerHTML = '再猜一次';
+                    if (handList[random] === myChoice[0]) {
+                        alert('你們平手!');
+                    } else if (handList[random] == '剪刀' && myChoice[0] == '布') {
+                        alert('你輸了!');
+                    } else if (handList[random] == '石頭' && myChoice[0] == '剪刀') {
+                        alert('你輸了!');
+                    } else if (handList[random] == '布' && myChoice[0] == '石頭') {
+                        alert('你輸了!');
+                    } else if (handList[random] == '剪刀' && myChoice[0] == '石頭') {
+                        alert('你贏了!');
+                    } else if (handList[random] == '石頭' && myChoice[0] == '布') {
+                        alert('你贏了!');
+                    } else {
+                        alert('你贏了!');
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

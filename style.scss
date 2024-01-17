@@ -190,3 +190,10 @@ ul.option{
 .liColorClear{
     animation: none !important;
 }
+
+
+@media screen and (max-width:700px){
+    .container{
+        height: 50%;
+    }
+}

@@ -192,8 +192,36 @@ ul.option{
 }
 
 
-@media screen and (max-width:700px){
+@media screen and (max-width:1200px){
+    body {
+        justify-content: center;
+    }
     .container{
-        height: 50%;
+        height: 60%;
+        align-items: center;
+        .computer, .player{
+            width: 80%;
+            height: 55%;
+        }
+    }
+}
+@media screen and (max-width:700px){
+    body {
+        justify-content: center;
+    }
+    .container{
+        height: 90%;
+        align-items: center;
+        flex-direction: column;
+        .computer {
+            margin-bottom: 10px;
+        }
+        .computer, .player{
+            width: 80%;
+            height: 40%;
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
     }
 }
